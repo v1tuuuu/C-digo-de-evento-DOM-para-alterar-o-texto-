@@ -1,0 +1,70 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVENTO DOM</title>
+    <style>
+       #area{
+        width: 300px;
+        height: 300px;
+        background-color: rgb(0, 0, 0);
+        color: rgb(142, 31, 31);
+        font: normal 30 px arial;
+        line-height: 200px;
+        text-align: center;
+       }
+    </style>
+</head>
+<body>
+    <div id="area">
+        interaja...
+
+    </div>
+
+
+    <script>
+        // Código de evento DOM para alterar o texto e a cor da área quando o mouse interage.
+        // - clique: mostra 'Clicou!' em azul
+        // - mouseenter: mostra 'Entrou!' em verde, depois exibe 'Passou!' em amarelo e retorna para 'interaja...'
+        // - mouseleave: retorna imediatamente para 'interaja...' com fundo preto
+        
+        var area = document.getElementById('area');
+        var timeoutId = null;
+
+        area.addEventListener('click', clicar);
+        area.addEventListener('mouseenter', entrar);
+        area.addEventListener('mouseleave', resetar);
+
+        function clicar(){
+            clearTimeout(timeoutId);
+            area.innerText = 'Clicou!';
+            area.style.backgroundColor = 'blue';
+        }
+
+        function entrar(){
+            clearTimeout(timeoutId);
+            area.innerText = 'Entrou!';
+            area.style.backgroundColor = 'green';
+            area.style.color = 'white';
+
+            timeoutId = setTimeout(function(){
+                passar();
+                timeoutId = setTimeout(resetar, 1000);
+            }, 1000);
+        }
+
+        function passar(){
+            area.innerText = 'Passou!';
+            area.style.backgroundColor = 'yellow';
+            area.style.color = 'black';
+        }
+
+        function resetar(){
+            clearTimeout(timeoutId);
+            area.innerText = 'interaja...';
+            area.style.backgroundColor = 'black';
+            area.style.color = 'rgb(142, 31, 31)';
+        }
+    </script>
+</body>
+</html>
